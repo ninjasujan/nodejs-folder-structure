@@ -1,27 +1,37 @@
-import {Server, Socket} from 'socket.io';
-import {Server as app} from 'http';
-import UploadHandler from '../subscribers/upload.handler';
-import SocketHandler from '../subscribers/socket.handler';
+import { Server, Socket } from 'socket.io';
+import { Server as app } from 'http';
+import { connectionEvent } from '../constants/socket.constant';
+import SocketHandler from '../app/subscribers/socket.handler';
 
 /**
  * Initialization socket and attaching events
  */
-
 class SocketIO {
   public static io: any;
 
   public static socket: Socket;
 
   public static init(server: app) {
-    SocketIO.io = new Server(server);
+    SocketIO.io = new Server(server, {
+      maxHttpBufferSize: 7e6,
+      transports: ['websocket'],
+      cors: {
+        origin: '*',
+      },
+    });
     SocketIO.io.use(this.socketMiddleware);
-    SocketIO.io.on('connection', SocketIO.socketConnection);
+    SocketIO.io.on(connectionEvent.CONNECTION, SocketIO.socketConnection);
   }
 
-  public static socketMiddleware(socket: Socket, next: any) {
+  public static socketMiddleware(socket: Socket, next: Function) {
     /* eslint-disable-next-line no-console */
     console.log('[Socket middleware]', socket.id);
     next();
+  }
+
+  public static socketEventMiddleware(event: Array<any>) {
+    /* eslint-disable-next-line no-console */
+    console.log('\x1b[33m%s\x1b[0m', `SOCKET: ${event[0]}`);
   }
 
   public static socketConnection(socket: Socket) {
@@ -29,14 +39,14 @@ class SocketIO {
     console.log('[Socket connected]');
     SocketIO.socket = socket;
 
-    /**
-     * subscribe to socket events
-     */
-    const uploadEvent = new UploadHandler(SocketIO.socket, SocketIO.io);
-    uploadEvent.subscribeEvents();
+    socket.use((event: Array<any>, next: Function) => {
+      SocketIO.socketEventMiddleware(event);
+      next();
+    });
 
-    const socketEvent = new SocketHandler(SocketIO.socket, SocketIO.io);
-    socketEvent.subscribeEvents();
+    // subscribe socket events
+    const ConnectionEvent = new SocketHandler(SocketIO.socket, SocketIO.socket);
+    ConnectionEvent.attacheEvents();
   }
 }
 

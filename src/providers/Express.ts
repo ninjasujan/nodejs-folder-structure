@@ -1,8 +1,8 @@
-import http, {Server} from 'http';
-import express, {Application} from 'express';
-import route from '../api/main.route';
-import ExceptionHandler from '../exceptions/Handler';
-import httpMiddleware from '../api/middleware/http.middleware';
+import http, { Server } from 'http';
+import express, { Application } from 'express';
+import routes from '../app/routes/index';
+import ExceptionHandler from '../app/exceptions/Handler';
+import httpMiddleware from '../app/middleware/http.middleware';
 import Locals from './Locals';
 
 class Express {
@@ -28,7 +28,7 @@ class Express {
   }
 
   public mountRoute(): void {
-    this.express.use('/api', route);
+    this.express.use('/api', routes);
     this.express.use(ExceptionHandler.errorHandler);
   }
 
@@ -37,10 +37,12 @@ class Express {
   }
 
   public init(): void {
-    const {port} = Locals.config();
-    this.server.listen(port, () => {
+    this.server.listen(Locals.config().PORT, () => {
       /* eslint-disable-next-line no-console */
-      console.log('\x1b[33m%s\x1b[0m', `[Server running on port ${port}]`);
+      console.log(
+        '\x1b[33m%s\x1b[0m',
+        `[Server running on port ${Locals.config().PORT}]`,
+      );
     });
   }
 }
