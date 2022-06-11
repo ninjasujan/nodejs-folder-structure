@@ -16,9 +16,9 @@ code**
 5. Install dependencies(dev) - typescript, ts-node nodemon, @types/express,
    @types/node; express
 6. configure your scripts in package.json
-   - start: "node dist/app.js"
-   * dev: "node src/app.ts"
-   * build: "tsc -p ."
+    - start: "node dist/app.js"
+    * dev: "node src/app.ts"
+    * build: "tsc -p ."
 7. Next step is to run your script with command
 
 ## Added pre commit hooks
