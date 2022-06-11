@@ -1,13 +1,13 @@
 import App from './providers/App';
-import Locals from './providers/Locals';
 
-/**
- * Connecting Database
- */
+class Bootup {
+    public static init = () => {
+        /** Load database */
+        App.initDatabase();
 
-App.loadDatabase();
+        /** Load server */
+        App.initServer();
+    };
+}
 
-/**
- * Connecting server
- */
-App.loadServer();
+Bootup.init();
