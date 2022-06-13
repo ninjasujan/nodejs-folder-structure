@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Locals from '../configs/Locals';
+import Logger from '../logs/logger';
 
 export class Database {
     /**
@@ -12,7 +13,7 @@ export class Database {
 
         mongoose.connection.on('connected', async () => {
             /* eslint-disable-next-line no-console */
-            console.log(`[Mongoose connection] success`);
+            Logger.info(`[Mongoose connection] success`);
         });
 
         mongoose.connection.on('error', () => {
