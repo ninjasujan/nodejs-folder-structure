@@ -4,7 +4,7 @@ import routes from '../app/routes/index';
 import ExceptionHandler from '../app/exceptions/Handler';
 import httpMiddleware from '../app/middleware/http.middleware';
 import Locals from '../configs/Locals';
-import Logger from '../logs/logger';
+import Logger from '../logger/logger';
 
 class Express {
     /**
@@ -40,7 +40,7 @@ class Express {
     public init(): void {
         const { PORT } = Locals.config().server;
         this.server.listen(PORT, () => {
-            Logger.info(`[Server Runinng in port] ${  PORT}`);
+            Logger.info(`[Server Runinng in port] ${PORT}`);
         });
     }
 }
