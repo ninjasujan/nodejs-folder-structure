@@ -20,9 +20,8 @@ class Http {
             algorithms: ['HS256'],
         }).unless({ path: [{ url: '/api/v1/user/login', method: ['POST'] }] });
 
-        if (process.env.NODE_ENV === 'dev') {
-            _express.use(morgan('dev'));
-        }
+        _express.use(morgan('dev'));
+
         if (process.env.NODE_ENV === 'prod') {
             /* eslint-disable-next-line no-console */
             console.log = () => {};

@@ -4,8 +4,8 @@
     "description": "this repository contains the nodejs folder structure for handling large project.",
     "main": "index.js",
     "scripts": {
-        "start": "NODE_ENV=production node dist/index.js",
-        "dev": "NODE_ENV=development nodemon --files src/index.ts",
+        "start": "NODE_ENV=production npm run build && tsc-alias && node dist/index.js",
+        "dev": "NODE_ENV=development nodemon",
         "lint-staged": "lint-staged",
         "build": "tsc -p .",
         "lint": "eslint --fix",
@@ -67,6 +67,7 @@
         "prettier": "^2.4.0",
         "pretty-quick": "^3.1.1",
         "ts-node": "^10.2.0",
+        "tsconfig-paths": "^4.0.0",
         "typescript": "^4.3.5"
     }
 }
