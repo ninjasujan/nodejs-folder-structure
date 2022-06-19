@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "NODE_ENV=production node dist/index.js",
-        "dev": "NODE_ENV=development nodemon src/index.ts",
+        "dev": "NODE_ENV=development nodemon --files src/index.ts",
         "lint-staged": "lint-staged",
         "build": "tsc -p .",
         "lint": "eslint --fix",
@@ -37,6 +37,7 @@
         "express": "^4.17.1",
         "express-jwt": "^6.1.0",
         "express-validator": "^6.12.1",
+        "generate-api-key": "^1.0.0",
         "helmet": "^4.6.0",
         "mongoose": "^6.2.4",
         "morgan": "^1.10.0",

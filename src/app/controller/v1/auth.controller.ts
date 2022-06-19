@@ -10,7 +10,7 @@ class Login {
         next: NextFunction,
     ) => {
         try {
-            const { email }: { email: string } = req.body;
+            const { email } = req.body;
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 throw new ValidatioError(errors);
